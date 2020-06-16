@@ -27,9 +27,11 @@ app.use(route(asyncRoute))
 
 Convert a callback style middleware to work inside of an asynchronous environment.  Does not return any value, it will just throw if an error occures inside the middleware.
 
-### `route(connectRoute)`
+### `route(asyncConnectRoute)`
 
-Converts an async route to a connect style callback route.
+Converts an async connect route to a callback connect route.
+
+`connectRoute(req, res)` should return a promise.  `route(connectRoute) = (req, res, next) => {...}` returns a connet style callback middleware 
 
 ### `hashRoute(asyncHashRoute)`
 
