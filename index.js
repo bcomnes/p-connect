@@ -2,21 +2,9 @@
 
 // Promise based connect
 exports.pMiddleware = function pMiddleware (middleware) {
-  return (req, res) => {
+  return (...args) => {
     return new Promise((resolve, reject) => {
-      middleware(req, res, (err) => {
-        if (err) reject(err)
-        else resolve()
-      })
-    })
-  }
-}
-
-// Promise based hashrouter
-exports.pHashMiddleware = function pHashMiddleware (hashMiddleware) {
-  return (req, res, opts) => {
-    return new Promise((resolve, reject) => {
-      hashMiddleware(req, res, opts, (err) => {
+      middleware(...args, (err) => {
         if (err) reject(err)
         else resolve()
       })
@@ -25,16 +13,9 @@ exports.pHashMiddleware = function pHashMiddleware (hashMiddleware) {
 }
 
 // async -> cb
-
 exports.route = function route (route) {
-  return (req, res, next) => {
-    route(req, res).then(() => next(null)).catch(next)
-  }
-}
-
-// For http-hash-router style routes
-exports.hashRoute = function hashRoute (hashRoute) {
-  return (req, res, opts, done) => {
-    hashRoute(req, res, opts).then(() => done(null)).catch(done)
+  return (...args) => {
+    var next = args[args.length - 1]
+    route(...args).catch(next)
   }
 }
