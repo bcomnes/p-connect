@@ -11,7 +11,7 @@ npm install p-connect
 ``` js
 const { pMiddleware, route, hashRoute } = require('p-connect')
 const bodyParser = require('body-parser')
-const pJson = pMw(bodyParser.json())
+const pJson = pMiddleware(bodyParser.json())
 
 const asyncRoute = async (req, res) => {
    await jsonBp(req, res)
